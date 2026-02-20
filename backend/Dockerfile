@@ -13,7 +13,8 @@ FROM node:20-alpine
 WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=build /app/dist ./dist
+COPY --from=build /app/prisma ./prisma
 COPY --from=deps /app/node_modules ./node_modules
 COPY package.json ./package.json
 EXPOSE 3000
-CMD ["node", "dist/main.js"]
+CMD ["sh", "-c", "npm run prisma:migrate:deploy && node dist/main.js"]

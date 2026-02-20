@@ -11,8 +11,8 @@ export class NatalController {
   constructor(private readonly subscriptionService: SubscriptionService) {}
 
   @Get()
-  getNatalChart(@CurrentUser() user: { userId: string }) {
-    const status = this.subscriptionService.getStatus(user.userId);
+  async getNatalChart(@CurrentUser() user: { userId: string }) {
+    const status = await this.subscriptionService.getStatus(user.userId);
 
     return {
       sunSign: 'Leo',

@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CurrentUser, JwtAuthGuard } from '../common/auth';
+import { VerifyGooglePurchaseDto } from './dto';
 import { SubscriptionService } from './subscription.service';
 
 @ApiTags('subscription')
@@ -18,8 +19,8 @@ export class SubscriptionController {
   @Post('google/verify')
   verify(
     @CurrentUser() user: { userId: string },
-    @Body('purchaseToken') purchaseToken: string,
+    @Body() dto: VerifyGooglePurchaseDto,
   ) {
-    return this.subscriptionService.verifyGooglePurchase(user.userId, purchaseToken);
+    return this.subscriptionService.verifyGooglePurchase(user.userId, dto.purchaseToken);
   }
 }

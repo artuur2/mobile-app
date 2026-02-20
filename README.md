@@ -3,17 +3,25 @@
 Старт разработки выполнен с упором на **продуктовый backend**, готовый к масштабированию.
 
 ## Что уже реализовано
-- NestJS API с модульной структурой (`auth`, `subscription`, `forecasts`, `natal-chart`, `meditations`, `events`, `profile`).
+- NestJS API с модульной структурой (`auth`, `subscription`, `forecasts`, `natal-chart`, `meditations`, `events`, `profile`, `health`).
+- PostgreSQL data layer через Prisma (`User`, `Plan`) вместо in-memory хранилища.
+- Prisma SQL migration baseline + `prisma migrate deploy` для repeatable DB rollout.
 - JWT access/refresh flow (короткоживущий access token).
 - Базовый server-side entitlement check (free/premium) в ключевых endpoint.
+- Idempotent обработка `POST /subscription/google/verify` с записью hash purchase token в БД.
 - Security baseline: helmet, валидация входных DTO, глобальный rate limit.
+- Health endpoints: `/api/health/live`, `/api/health/ready`.
+- Structured request logging + `x-request-id` correlation for observability baseline.
+- Unified API error envelope (global exception filter) с `requestId` для быстрого трейсинга ошибок.
 - Swagger (`/docs`) для синхронизации backend + Android команды.
-- Docker Compose с PostgreSQL и Redis для следующего шага миграции с in-memory на persistent storage.
+- Docker Compose с PostgreSQL и Redis для локальной среды и дальнейшего scale-out.
 
 ## Быстрый старт
 ```bash
 cd backend
 npm install
+npm run prisma:migrate:deploy
+npm run prisma:generate
 npm run start:dev
 ```
 
@@ -24,9 +32,9 @@ Demo user:
 - email: `demo@astrology.app`
 - password: `demo1234`
 
-## Следующий приоритет (production hardening)
-1. Перейти с in-memory слоя на Postgres (Prisma/TypeORM + миграции).
-2. Вынести purchase validation в асинхронный workflow (queue + retries).
-3. Добавить проверку Play Integrity + risk scoring.
-4. Подключить observability (OpenTelemetry + Prometheus/Grafana).
-5. Разделить сервисы на `api-gateway`, `billing`, `content/forecast-engine`.
+## Production hardening (next)
+1. Вынести purchase validation в асинхронный workflow (queue + retries + idempotency key).
+2. Добавить Play Integrity/SafetyNet и anti-fraud risk scoring.
+3. Расширить observability до OpenTelemetry + Prometheus/Grafana.
+4. Добавить refresh token rotation + revoke list.
+5. Разделить домены на сервисы (`api-gateway`, `billing`, `content/forecast-engine`) при росте нагрузки.

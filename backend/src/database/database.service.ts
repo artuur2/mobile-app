@@ -1,28 +1,44 @@
-import { Injectable } from '@nestjs/common';
-import { UserRecord } from '../common/types';
+import { Injectable, OnModuleInit } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { PrismaClient } from '@prisma/client';
+import { hash } from 'bcryptjs';
 
 @Injectable()
-export class DatabaseService {
-  private users: UserRecord[] = [
-    {
-      id: 'u1',
-      email: 'demo@astrology.app',
-      password: 'demo1234',
-      name: 'Demo User',
-      plan: 'free',
-    },
-  ];
-
-  findUserByEmail(email: string): UserRecord | undefined {
-    return this.users.find((user) => user.email === email);
+export class DatabaseService extends PrismaClient implements OnModuleInit {
+  constructor(private readonly configService: ConfigService) {
+    super({
+      datasources: {
+        db: {
+          url: configService.get<string>(
+            'DATABASE_URL',
+            'postgresql://astrology:astrology@localhost:5432/astrology?schema=public',
+          ),
+        },
+      },
+    });
   }
 
-  findUserById(id: string): UserRecord | undefined {
-    return this.users.find((user) => user.id === id);
+  async onModuleInit() {
+    await this.$connect();
+
+    if (this.configService.get<string>('BOOTSTRAP_DEMO_USER', 'true') === 'true') {
+      await this.ensureDemoUser();
+    }
   }
 
-  updateUser(user: UserRecord): UserRecord {
-    this.users = this.users.map((item) => (item.id === user.id ? user : item));
-    return user;
+  private async ensureDemoUser() {
+    const existing = await this.user.findUnique({ where: { email: 'demo@astrology.app' } });
+    if (existing) {
+      return;
+    }
+
+    await this.user.create({
+      data: {
+        email: 'demo@astrology.app',
+        passwordHash: await hash('demo1234', 10),
+        name: 'Demo User',
+        plan: 'free',
+      },
+    });
   }
 }

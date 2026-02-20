@@ -5,6 +5,8 @@ services:
       context: ./backend
     env_file:
       - ./backend/.env.example
+    environment:
+      DATABASE_URL: postgresql://astrology:astrology@postgres:5432/astrology?schema=public
     ports:
       - '3000:3000'
     depends_on:

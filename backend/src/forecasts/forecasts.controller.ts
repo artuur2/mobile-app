@@ -13,7 +13,7 @@ export class ForecastsController {
   constructor(private readonly subscriptionService: SubscriptionService) {}
 
   @Get()
-  getForecast(
+  async getForecast(
     @CurrentUser() user: { userId: string },
     @Query('period') period: string,
     @Query('topic') topic: string,
@@ -22,7 +22,7 @@ export class ForecastsController {
       throw new BadRequestException('Unsupported period');
     }
 
-    const status = this.subscriptionService.getStatus(user.userId);
+    const status = await this.subscriptionService.getStatus(user.userId);
     if (status.plan === 'free' && period !== 'day') {
       throw new BadRequestException('Upgrade required for this period');
     }

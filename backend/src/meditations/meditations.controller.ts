@@ -11,8 +11,8 @@ export class MeditationsController {
   constructor(private readonly subscriptionService: SubscriptionService) {}
 
   @Get()
-  list(@CurrentUser() user: { userId: string }) {
-    const status = this.subscriptionService.getStatus(user.userId);
+  async list(@CurrentUser() user: { userId: string }) {
+    const status = await this.subscriptionService.getStatus(user.userId);
     const all = [
       { id: 'm1', title: 'Grounding', durationSec: 420 },
       { id: 'm2', title: 'Focus', durationSec: 600 },
