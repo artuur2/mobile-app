@@ -11,6 +11,7 @@ import { NatalModule } from './natal/natal.module';
 import { ProfileModule } from './profile/profile.module';
 import { SubscriptionModule } from './subscription/subscription.module';
 import { LoggingInterceptor } from './common/logging.interceptor';
+import { GlobalHttpExceptionFilter } from './common/http-exception.filter';
 import { RequestIdMiddleware } from './common/request-id.middleware';
 
 @Module({
@@ -32,7 +33,7 @@ import { RequestIdMiddleware } from './common/request-id.middleware';
     MeditationsModule,
     EventsModule,
   ],
-  providers: [LoggingInterceptor],
+  providers: [LoggingInterceptor, GlobalHttpExceptionFilter],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

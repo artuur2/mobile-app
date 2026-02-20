@@ -12,6 +12,7 @@
 - Security baseline: helmet, валидация входных DTO, глобальный rate limit.
 - Health endpoints: `/api/health/live`, `/api/health/ready`.
 - Structured request logging + `x-request-id` correlation for observability baseline.
+- Unified API error envelope (global exception filter) с `requestId` для быстрого трейсинга ошибок.
 - Swagger (`/docs`) для синхронизации backend + Android команды.
 - Docker Compose с PostgreSQL и Redis для локальной среды и дальнейшего scale-out.
 
