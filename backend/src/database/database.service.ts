@@ -20,7 +20,10 @@ export class DatabaseService extends PrismaClient implements OnModuleInit {
 
   async onModuleInit() {
     await this.$connect();
-    await this.ensureDemoUser();
+
+    if (this.configService.get<string>('BOOTSTRAP_DEMO_USER', 'true') === 'true') {
+      await this.ensureDemoUser();
+    }
   }
 
   private async ensureDemoUser() {

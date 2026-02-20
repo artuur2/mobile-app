@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
 import { EventsModule } from './events/events.module';
 import { ForecastsModule } from './forecasts/forecasts.module';
+import { HealthModule } from './health/health.module';
 import { MeditationsModule } from './meditations/meditations.module';
 import { NatalModule } from './natal/natal.module';
 import { ProfileModule } from './profile/profile.module';
@@ -20,6 +21,7 @@ import { SubscriptionModule } from './subscription/subscription.module';
       },
     ]),
     DatabaseModule,
+    HealthModule,
     AuthModule,
     ProfileModule,
     SubscriptionModule,
