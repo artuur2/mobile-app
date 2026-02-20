@@ -14,6 +14,7 @@
 - Structured request logging + `x-request-id` correlation for observability baseline.
 - Unified API error envelope (global exception filter) с `requestId` для быстрого трейсинга ошибок.
 - Swagger (`/docs`) для синхронизации backend + Android команды.
+- Медитации: paywall-aware каталог с персонализацией по состоянию (`state`) и лимитами free/premium.
 - Docker Compose с PostgreSQL и Redis для локальной среды и дальнейшего scale-out.
 
 ## Быстрый старт
