@@ -11,6 +11,7 @@ import { NatalModule } from './natal/natal.module';
 import { ProfileModule } from './profile/profile.module';
 import { SubscriptionModule } from './subscription/subscription.module';
 import { PushModule } from './push/push.module';
+import { IntegrityModule } from './integrity/integrity.module';
 import { LoggingInterceptor } from './common/logging.interceptor';
 import { GlobalHttpExceptionFilter } from './common/http-exception.filter';
 import { RequestIdMiddleware } from './common/request-id.middleware';
@@ -34,6 +35,7 @@ import { RequestIdMiddleware } from './common/request-id.middleware';
     MeditationsModule,
     EventsModule,
     PushModule,
+    IntegrityModule,
   ],
   providers: [LoggingInterceptor, GlobalHttpExceptionFilter],
 })

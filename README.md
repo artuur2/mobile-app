@@ -3,7 +3,7 @@
 Старт разработки выполнен с упором на **продуктовый backend**, готовый к масштабированию.
 
 ## Что уже реализовано
-- NestJS API с модульной структурой (`auth`, `subscription`, `forecasts`, `natal-chart`, `meditations`, `events`, `profile`, `health`).
+- NestJS API с модульной структурой (`auth`, `subscription`, `forecasts`, `natal-chart`, `meditations`, `events`, `push`, `integrity`, `profile`, `health`).
 - PostgreSQL data layer через Prisma (`User`, `Plan`) вместо in-memory хранилища.
 - Prisma SQL migration baseline + `prisma migrate deploy` для repeatable DB rollout.
 - JWT access/refresh flow (короткоживущий access token).
@@ -17,6 +17,7 @@
 - Медитации: paywall-aware каталог с персонализацией по состоянию (`state`) и лимитами free/premium.
 - Натальная карта: интерпретации с фокусом (`general/love/career/energy`) и расширенной детализацией домов/аспектов для premium.
 - Push/retention: регистрация push device token и подбор следующей retention-кампании по состоянию пользователя.
+- Device integrity/anti-fraud baseline: endpoint проверки сигналов устройства с risk score и policy decision (`allow/review/block`).
 - Docker Compose с PostgreSQL и Redis для локальной среды и дальнейшего scale-out.
 
 ## Быстрый старт
