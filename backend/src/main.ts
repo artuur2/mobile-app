@@ -2,6 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
+import { LoggingInterceptor } from './common/logging.interceptor';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -10,6 +11,7 @@ async function bootstrap() {
   app.use(helmet());
   app.enableCors();
   app.setGlobalPrefix('api');
+  app.useGlobalInterceptors(app.get(LoggingInterceptor));
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

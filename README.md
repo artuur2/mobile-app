@@ -11,6 +11,7 @@
 - Idempotent обработка `POST /subscription/google/verify` с записью hash purchase token в БД.
 - Security baseline: helmet, валидация входных DTO, глобальный rate limit.
 - Health endpoints: `/api/health/live`, `/api/health/ready`.
+- Structured request logging + `x-request-id` correlation for observability baseline.
 - Swagger (`/docs`) для синхронизации backend + Android команды.
 - Docker Compose с PostgreSQL и Redis для локальной среды и дальнейшего scale-out.
 
@@ -33,6 +34,6 @@ Demo user:
 ## Production hardening (next)
 1. Вынести purchase validation в асинхронный workflow (queue + retries + idempotency key).
 2. Добавить Play Integrity/SafetyNet и anti-fraud risk scoring.
-3. Подключить observability (OpenTelemetry + Prometheus/Grafana + structured logs).
+3. Расширить observability до OpenTelemetry + Prometheus/Grafana.
 4. Добавить refresh token rotation + revoke list.
 5. Разделить домены на сервисы (`api-gateway`, `billing`, `content/forecast-engine`) при росте нагрузки.
